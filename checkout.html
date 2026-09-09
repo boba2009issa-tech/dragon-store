@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#05080d">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css"><script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:["Manrope","sans-serif"],serif:["Cormorant Garamond","serif"]}}}}</script>
+  <title>Order — Dragon Premium Watches</title>
+</head>
+<body data-page="checkout">
+<header class="nav-shell fixed top-0 left-0 right-0 z-50 text-white"><div class="header-inner max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 h-[76px] flex items-center justify-between">
+  <a href="index.html" class="brand-mark flex items-center gap-3 min-w-0"><img src="assets/dragon-logo.jpg" class="brand-logo w-10 h-10 rounded-full object-cover shrink-0" alt="Dragon logo"><div class="leading-none"><div class="brand-name font-bold tracking-[.18em] text-sm">DRAGON</div><div class="brand-subtitle text-[9px] tracking-[.22em] text-slate-400 mt-1">PREMIUM WATCHES</div></div></a>
+  <nav class="desktop-nav items-center gap-7"><a href="index.html" data-nav="home" class="nav-link">Home</a><a href="products.html" data-nav="products" class="nav-link">Collection</a><a href="index.html#story" class="nav-link">The house</a></nav>
+  <div class="header-actions flex items-center gap-3 shrink-0"><a href="https://www.instagram.com/drago__n1_/" target="_blank" rel="noopener" class="header-instagram text-[10px] uppercase tracking-[.16em] text-slate-300 hover:text-white">Instagram</a><button data-open-cart class="cart-trigger" aria-label="Open shopping cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span data-cart-count class="cart-count hidden">0</span></button><button data-mobile-menu-button class="cart-trigger md:hidden" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+</div></header>
+<nav class="mobile-menu" data-mobile-menu><a data-mobile-link href="index.html">Home</a><a data-mobile-link href="products.html">Collection</a><a data-mobile-link href="index.html#story">The house</a><a data-mobile-link href="https://www.instagram.com/drago__n1_/" target="_blank" rel="noopener">Instagram</a></nav>
+
+<main class="pt-[76px]">
+  <section class="bg-[#05080d] text-white py-16 lg:py-20"><div class="max-w-5xl mx-auto px-5 lg:px-8"><div class="hero-eyebrow"><span class="gold-rule"></span> Final step</div><h1 class="lux-serif text-6xl lg:text-8xl mt-6">Your order.</h1><p class="text-slate-400 max-w-xl mt-5 text-sm leading-7">Your selected products stay attached to this order. Add your contact and delivery details, then confirm to copy the complete message and open Dragon's Instagram profile to start the conversation.</p></div></section>
+
+  <section class="py-12 lg:py-20"><div class="max-w-5xl mx-auto px-5 lg:px-8">
+    <div data-checkout-empty class="hidden bg-white border border-slate-200 p-10 text-center"><h2 class="lux-serif text-4xl">Nothing here yet.</h2><p class="text-sm text-slate-500 mt-3">Add at least one watch before starting an order.</p><a href="products.html" class="inline-block mt-6 bg-[#0b1d31] text-white px-6 py-3 text-xs uppercase tracking-widest">Browse collection</a></div>
+
+    <form data-order-form class="grid lg:grid-cols-[1fr_380px] gap-8">
+      <div class="bg-white border border-slate-200 p-6 lg:p-8">
+        <div class="section-kicker">Delivery details</div><h2 class="lux-serif text-4xl mt-3">Where should we send it?</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-8">
+          <label class="text-xs text-slate-500">Full name<input required name="name" autocomplete="name" class="input mt-2" placeholder="Your name"></label>
+          <label class="text-xs text-slate-500">Phone number<input required name="phone" type="tel" autocomplete="tel" class="input mt-2" placeholder="01XXXXXXXXX"></label>
+          <label class="text-xs text-slate-500 sm:col-span-2">Governorate<select required name="governorate" class="input mt-2"><option value="">Choose governorate</option><option>Cairo</option><option>Giza</option><option>Alexandria</option><option>Qalyubia</option><option>Sharqia</option><option>Dakahlia</option><option>Gharbia</option><option>Monufia</option><option>Beheira</option><option>Kafr El Sheikh</option><option>Damietta</option><option>Port Said</option><option>Ismailia</option><option>Suez</option><option>Fayoum</option><option>Beni Suef</option><option>Minya</option><option>Asyut</option><option>Sohag</option><option>Qena</option><option>Luxor</option><option>Aswan</option><option>Red Sea</option><option>New Valley</option><option>Matrouh</option><option>North Sinai</option><option>South Sinai</option></select></label>
+          <label class="text-xs text-slate-500 sm:col-span-2">Full address<textarea required name="address" autocomplete="street-address" rows="3" class="input mt-2 resize-none" placeholder="Area, street, building, apartment…"></textarea></label>
+          <label class="text-xs text-slate-500 sm:col-span-2">Order note <span class="text-slate-400">(optional)</span><textarea name="notes" rows="3" class="input mt-2 resize-none" placeholder="Gift note, preferred contact time, etc."></textarea></label>
+        </div>
+        <button type="submit" class="mt-7 w-full bg-[#0b1d31] text-white py-4 text-xs uppercase tracking-[.18em] hover:bg-black transition">Confirm order & open Instagram</button>
+        <div data-order-success class="order-success">The order details have been copied. Instagram is opening now — open Message on the Dragon profile, paste the copied order, and send it.</div>
+        <p class="text-[11px] text-slate-400 mt-4 text-center">The order becomes final after confirmation with the Dragon representative.</p>
+      </div>
+
+      <aside class="bg-white border border-slate-200 p-6 lg:p-7 h-fit lg:sticky lg:top-28">
+        <div class="section-kicker">Your selection</div><h2 class="lux-serif text-3xl mt-3">Order summary</h2>
+        <div data-order-summary class="mt-5"></div>
+      </aside>
+    </form>
+  </div></section>
+</main>
+
+<footer class="footer"><div class="max-w-7xl mx-auto px-5 lg:px-8 py-16 lg:py-20"><div class="grid md:grid-cols-4 gap-10"><div class="md:col-span-2"><div class="flex items-center gap-3 text-white"><img src="assets/dragon-logo.jpg" class="w-11 h-11 rounded-full object-cover" alt="Dragon logo"><span class="font-bold tracking-[.18em]">DRAGON</span></div><p class="mt-6 max-w-md text-sm leading-7 text-slate-400">Premium watches and gifts, selected for people who believe the smallest details say the most.</p></div><div><div class="text-[10px] tracking-[.2em] uppercase text-slate-500">Explore</div><div class="mt-5 space-y-3 text-sm"><a href="index.html">Home</a><a href="products.html" class="block">Collection</a><a href="index.html#story" class="block">Our story</a></div></div><div><div class="text-[10px] tracking-[.2em] uppercase text-slate-500">Connect</div><div class="mt-5 space-y-3 text-sm"><a href="https://www.instagram.com/drago__n1_/" target="_blank" rel="noopener" class="block">Instagram DM</a><span class="block text-slate-400">Shipping across Egypt</span><span class="block text-slate-400">Representative-confirmed orders</span></div></div></div><div class="border-t border-white/10 mt-14 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-[10px] uppercase tracking-[.15em] text-slate-500"><span>© <span data-year></span> Dragon Premium Watches</span><span>Crafted for the moment</span></div></div></footer>
+
+<div class="cart-overlay" data-cart-overlay></div><aside class="cart-drawer" data-cart aria-label="Shopping cart"><div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between"><div><div class="text-[10px] tracking-[.2em] uppercase text-slate-400">Your selection</div><h2 class="lux-serif text-3xl">Shopping cart</h2></div><button data-close-cart class="text-2xl text-slate-500" aria-label="Close cart">×</button></div><div class="flex-1 overflow-y-auto px-6" data-cart-items></div><div class="border-t border-slate-200 p-6"><div class="flex justify-between text-sm"><span>Subtotal</span><strong data-cart-total>0 EGP</strong></div><div class="text-xs text-slate-500 mt-2">Shipping is confirmed with the Dragon representative.</div><a data-checkout-link href="checkout.html" class="cart-checkout block text-center bg-[#0b1d31] text-white mt-5 py-4 text-xs tracking-[.18em] uppercase hover:bg-black transition">Continue to order</a></div></aside><div class="toast" data-toast></div>
+<script src="assets/app.js"></script></body></html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#05080d">
+  <meta name="description" content="Dragon Premium Watches — refined timepieces and gifts across Egypt.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:["Manrope","sans-serif"],serif:["Cormorant Garamond","serif"]}}}}</script>
+  <title>Dragon — Premium Watches</title>
+</head>
+<body data-page="home" class="noise">
+
+<header class="nav-shell fixed top-0 left-0 right-0 z-50 text-white">
+  <div class="header-inner max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 h-[76px] flex items-center justify-between">
+    <a href="index.html" class="brand-mark flex items-center gap-3 min-w-0">
+      <img src="assets/dragon-logo.jpg" class="brand-logo w-10 h-10 rounded-full object-cover shrink-0" alt="Dragon Premium Watches logo">
+      <div class="leading-none"><div class="brand-name font-bold tracking-[.18em] text-sm">DRAGON</div><div class="brand-subtitle text-[9px] tracking-[.22em] text-slate-400 mt-1">PREMIUM WATCHES</div></div>
+    </a>
+    <nav class="desktop-nav items-center gap-7" aria-label="Main navigation">
+      <a href="index.html" data-nav="home" class="nav-link">Home</a>
+      <a href="products.html" data-nav="products" class="nav-link">Collection</a>
+      <a href="index.html#story" class="nav-link">The house</a>
+    </nav>
+    <div class="header-actions flex items-center gap-3 shrink-0">
+      <a href="https://www.instagram.com/direct/t/17845443282150287/" target="_blank" rel="noopener" class="header-instagram text-[10px] uppercase tracking-[.16em] text-slate-300 hover:text-white">Instagram</a>
+      <button data-open-cart class="cart-trigger" aria-label="Open shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+        <span data-cart-count class="cart-count hidden">0</span>
+      </button>
+      <button data-mobile-menu-button class="cart-trigger md:hidden" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-menu" data-mobile-menu aria-label="Mobile navigation">
+  <a data-mobile-link href="index.html">Home</a>
+  <a data-mobile-link href="products.html">Collection</a>
+  <a data-mobile-link href="index.html#story">The house</a>
+  <a data-mobile-link href="https://www.instagram.com/direct/t/17845443282150287/" target="_blank" rel="noopener">Instagram</a>
+</nav>
+
+<main>
+  <section class="hero pt-28">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1779363290395-eba75e939f1c?auto=format&fit=crop&fm=jpg&q=90&w=1600" aria-hidden="true">
+      <source src="https://videos.pexels.com/video-files/6355564/6355564-hd_1280_720_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <div class="hero-video-label">Motion study / timepiece</div>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 relative min-h-[660px] flex items-center hero-content">
+      <div class="max-w-3xl reveal">
+        <div class="hero-eyebrow"><span class="gold-rule"></span> Egyptian watch & gift house</div>
+        <h1 class="display-title lux-serif mt-8">Time,<br><em>refined.</em></h1>
+        <p class="hero-copy mt-8 text-sm lg:text-base">A considered collection of watches and gifts — selected for the details people notice and the moments they remember.</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="products.html" class="btn-primary">Explore collection</a>
+          <a href="#story" class="btn-ghost">Discover Dragon</a>
+        </div>
+        <div class="mt-12 flex flex-wrap gap-x-10 gap-y-5 text-xs text-slate-400">
+          <div><strong class="text-white block text-xl">01</strong>Curated pieces</div>
+          <div><strong class="text-white block text-xl">02</strong>Gift-ready feel</div>
+          <div><strong class="text-white block text-xl">03</strong>Egypt-wide shipping</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-white marquee py-5"><div class="marquee-track"><span>TIME IS THE DETAIL</span><span>✦</span><span>DRAGON PREMIUM WATCHES</span><span>✦</span><span>TIME IS THE DETAIL</span><span>✦</span><span>DRAGON PREMIUM WATCHES</span></div></div>
+
+  <section class="py-24 lg:py-32 bg-[#f3f4f5]">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 reveal">
+        <div><div class="section-kicker">The edit</div><h2 class="section-title lux-serif mt-4">Pieces that<br><em>make time.</em></h2></div>
+        <a href="products.html" class="text-xs uppercase tracking-[.16em] border-b border-slate-900 pb-2">View all watches →</a>
+      </div>
+      <div data-featured class="grid md:grid-cols-3 gap-5 mt-14"></div>
+    </div>
+  </section>
+
+  <section id="story" class="story-panel">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2">
+      <div class="px-5 lg:px-8 py-24 lg:py-32 reveal">
+        <div class="text-[10px] uppercase tracking-[.22em] text-[#c5a66a]">The Dragon standard</div>
+        <h2 class="lux-serif text-5xl lg:text-7xl leading-[.88] mt-6">Luxury doesn't<br>need to shout.</h2>
+        <p class="text-slate-400 leading-7 text-sm max-w-xl mt-8">Dragon is built around a simple idea: a watch should feel considered. The dial, the metal, the box, the moment you hand it over — every detail should carry weight.</p>
+        <div class="grid grid-cols-2 gap-8 mt-12 border-t border-white/10 pt-8"><div><div class="text-3xl lux-serif">01</div><p class="text-xs text-slate-500 mt-2">Curated designs</p></div><div><div class="text-3xl lux-serif">02</div><p class="text-xs text-slate-500 mt-2">Personal gifting</p></div></div>
+      </div>
+      <div class="story-image" style="background-image:url('https://images.unsplash.com/photo-1786052349874-8646a86b4329?auto=format&fit=crop&fm=jpg&q=90&w=2000')">
+        <div class="absolute left-6 bottom-6 z-10 text-white"><div class="text-[10px] uppercase tracking-[.2em] text-slate-300">A piece to remember</div><div class="lux-serif text-3xl mt-2">Made for the occasion.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-24 lg:py-28">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-12">
+      <div class="reveal"><div class="text-[11px] uppercase tracking-[.2em] text-slate-400">01 / Choose</div><h3 class="lux-serif text-4xl mt-4">Find your piece.</h3><p class="text-sm text-slate-500 leading-7 mt-4">Browse the collection, compare styles and build your selection.</p></div>
+      <div class="reveal"><div class="text-[11px] uppercase tracking-[.2em] text-slate-400">02 / Build</div><h3 class="lux-serif text-4xl mt-4">Build your cart.</h3><p class="text-sm text-slate-500 leading-7 mt-4">Add multiple watches and control each quantity before ordering.</p></div>
+      <div class="reveal"><div class="text-[11px] uppercase tracking-[.2em] text-slate-400">03 / Confirm</div><h3 class="lux-serif text-4xl mt-4">Talk to Dragon.</h3><p class="text-sm text-slate-500 leading-7 mt-4">Your complete order is copied and the Dragon Instagram profile opens so you can message the page.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 py-16 lg:py-20">
+    <div class="grid md:grid-cols-4 gap-10">
+      <div class="md:col-span-2"><div class="flex items-center gap-3 text-white"><img src="assets/dragon-logo.jpg" class="w-11 h-11 rounded-full object-cover" alt="Dragon logo"><span class="font-bold tracking-[.18em]">DRAGON</span></div><p class="mt-6 max-w-md text-sm leading-7 text-slate-400">Premium watches and gifts, selected for people who believe the smallest details say the most.</p></div>
+      <div><div class="text-[10px] tracking-[.2em] uppercase text-slate-500">Explore</div><div class="mt-5 space-y-3 text-sm"><a href="index.html">Home</a><a href="products.html" class="block">Collection</a><a href="index.html#story" class="block">Our story</a></div></div>
+      <div><div class="text-[10px] tracking-[.2em] uppercase text-slate-500">Connect</div><div class="mt-5 space-y-3 text-sm"><a href="https://www.instagram.com/drago__n1_/" target="_blank" rel="noopener" class="block">Instagram DM</a><span class="block text-slate-400">Shipping across Egypt</span><span class="block text-slate-400">Representative-confirmed orders</span></div></div>
+    </div>
+    <div class="border-t border-white/10 mt-14 pt-6 flex flex-col sm:flex-row justify-between gap-3 text-[10px] uppercase tracking-[.15em] text-slate-500"><span>© <span data-year></span> Dragon Premium Watches</span><span>Crafted for the moment</span></div>
+  </div>
+</footer>
+
+<div class="cart-overlay" data-cart-overlay></div>
+<aside class="cart-drawer" data-cart aria-label="Shopping cart">
+  <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between">
+    <div><div class="text-[10px] tracking-[.2em] uppercase text-slate-400">Your selection</div><h2 class="lux-serif text-3xl">Shopping cart</h2></div>
+    <button data-close-cart class="text-2xl text-slate-500" aria-label="Close cart">×</button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-6" data-cart-items></div>
+  <div class="border-t border-slate-200 p-6">
+    <div class="flex justify-between text-sm"><span>Subtotal</span><strong data-cart-total>0 EGP</strong></div>
+    <div class="text-xs text-slate-500 mt-2">Shipping is confirmed with the Dragon representative.</div>
+    <a data-checkout-link href="checkout.html" class="cart-checkout block text-center bg-[#0b1d31] text-white mt-5 py-4 text-xs tracking-[.18em] uppercase hover:bg-black transition">Continue to order</a>
+  </div>
+</aside>
+<div class="toast" data-toast></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

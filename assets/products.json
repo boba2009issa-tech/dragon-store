@@ -1,0 +1,82 @@
+[
+  {
+    "id": "aurelis-blue",
+    "name": "AURELIS BLUE",
+    "category": "Classic",
+    "price": 2850,
+    "oldPrice": 3400,
+    "badge": "BESTSELLER",
+    "description": "A polished steel timepiece with a deep blue dial and a clean everyday profile.",
+    "image": "https://images.unsplash.com/photo-1774744287122-4a0c96786dbd?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "noir-elite",
+    "name": "NOIR ÉLITE",
+    "category": "Luxury",
+    "price": 3450,
+    "oldPrice": 4100,
+    "badge": "SIGNATURE",
+    "description": "A dark, refined silhouette designed around contrast, texture and quiet confidence.",
+    "image": "https://images.unsplash.com/photo-1779363290395-eba75e939f1c?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "royal-gold",
+    "name": "ROYAL GOLD",
+    "category": "Luxury",
+    "price": 4200,
+    "oldPrice": 4900,
+    "badge": "LIMITED",
+    "description": "Warm gold tones, a polished case and a statement finish made for special occasions.",
+    "image": "https://images.unsplash.com/photo-1786052349874-8646a86b4329?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "moonphase",
+    "name": "MOONPHASE",
+    "category": "Statement",
+    "price": 3850,
+    "oldPrice": 4500,
+    "badge": "NEW",
+    "description": "A modern black timepiece with an intricate dial and a gallery-like product presence.",
+    "image": "https://images.unsplash.com/photo-1786124967103-875dda046e85?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "imperial-skeleton",
+    "name": "IMPERIAL SKELETON",
+    "category": "Statement",
+    "price": 4750,
+    "oldPrice": 5600,
+    "badge": "EDITOR'S PICK",
+    "description": "A mechanical-inspired statement piece where the movement becomes part of the design.",
+    "image": "https://images.unsplash.com/photo-1779363290395-eba75e939f1c?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "silver-atelier",
+    "name": "SILVER ATELIER",
+    "category": "Classic",
+    "price": 3100,
+    "oldPrice": 3700,
+    "badge": "ESSENTIAL",
+    "description": "Clean silver styling with a versatile profile that moves easily from desk to dinner.",
+    "image": "https://images.unsplash.com/photo-1772638904164-eed7c6b1e57e?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "midnight-chrono",
+    "name": "MIDNIGHT CHRONO",
+    "category": "Chronograph",
+    "price": 3950,
+    "oldPrice": 4700,
+    "badge": "NEW",
+    "description": "Sport-luxury attitude with a dark dial, crisp detailing and a confident wrist presence.",
+    "image": "https://images.unsplash.com/photo-1761078523947-29a103884945?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  },
+  {
+    "id": "golden-mirror",
+    "name": "GOLDEN MIRROR",
+    "category": "Luxury",
+    "price": 4450,
+    "oldPrice": 5200,
+    "badge": "ICON",
+    "description": "A warm gold statement captured against reflective surfaces for a distinctly premium mood.",
+    "image": "https://images.unsplash.com/photo-1786052349874-8646a86b4329?auto=format&fit=crop&fm=jpg&q=92&w=2400"
+  }
+]
