@@ -472,7 +472,8 @@ setTimeout(() => {
     }
   }, 1800);
 }, 350);
-
+});
+}
 // Start the application after the document is available.
 document.addEventListener("DOMContentLoaded", () => {
   setupNav();
