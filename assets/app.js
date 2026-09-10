@@ -1,9 +1,9 @@
 const CART_KEY = "dragon_cart_v1";
 
-// Official Instagram profile.
+// Official Instagram profile
 const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
 
-// Exact Instagram DM on the web.
+// Exact Instagram DM on the web
 const INSTAGRAM_DM_WEB =
   "https://www.instagram.com/direct/t/17845443282150287/";
 
@@ -55,10 +55,7 @@ function addToCart(id) {
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({
-      id,
-      qty: 1
-    });
+    cart.push({ id, qty: 1 });
   }
 
   saveCart(cart);
@@ -74,10 +71,7 @@ function setQty(id, quantity) {
   // A plus button on a product with quantity 0 should create the cart line.
   if (!item) {
     if (nextQuantity > 0) {
-      cart.push({
-        id,
-        qty: nextQuantity
-      });
+      cart.push({ id, qty: nextQuantity });
     }
 
     saveCart(cart);
@@ -106,24 +100,23 @@ function cartTotal() {
     );
 
     return total + (
-      product
-        ? product.price * item.qty
-        : 0
+      product ? product.price * item.qty : 0
     );
   }, 0);
 }
 
 // Return the quantity of a specific product in the cart.
 function getQty(id) {
-  return (
-    getCart().find((item) => item.id === id)?.qty || 0
-  );
+  return getCart().find(
+    (item) => item.id === id
+  )?.qty || 0;
 }
 
 // Render the cart drawer contents.
 function renderCart() {
-  const container =
-    document.querySelector("[data-cart-items]");
+  const container = document.querySelector(
+    "[data-cart-items]"
+  );
 
   if (!container) return;
 
@@ -135,10 +128,7 @@ function renderCart() {
         <div class="cart-empty-icon">🛒</div>
         <h3>Your cart is empty</h3>
         <p>Choose a timepiece and build your selection.</p>
-        <a
-          href="products.html"
-          class="cart-empty-link"
-        >
+        <a href="products.html" class="cart-empty-link">
           Explore collection
         </a>
       </div>
@@ -154,6 +144,7 @@ function renderCart() {
 
         return `
           <article class="cart-item">
+
             <img
               src="${product.image}"
               alt="${product.name}"
@@ -162,6 +153,7 @@ function renderCart() {
             >
 
             <div class="cart-item-info">
+
               <div class="cart-item-category">
                 ${product.category}
               </div>
@@ -174,10 +166,14 @@ function renderCart() {
                 class="quantity"
                 aria-label="Quantity for ${product.name}"
               >
+
                 <button
                   type="button"
                   aria-label="Decrease ${product.name}"
-                  onclick="setQty('${product.id}', ${item.qty - 1})"
+                  onclick="setQty(
+                    '${product.id}',
+                    ${item.qty - 1}
+                  )"
                 >
                   −
                 </button>
@@ -187,11 +183,16 @@ function renderCart() {
                 <button
                   type="button"
                   aria-label="Increase ${product.name}"
-                  onclick="setQty('${product.id}', ${item.qty + 1})"
+                  onclick="setQty(
+                    '${product.id}',
+                    ${item.qty + 1}
+                  )"
                 >
                   +
                 </button>
+
               </div>
+
             </div>
 
             <button
@@ -202,6 +203,7 @@ function renderCart() {
             >
               Remove
             </button>
+
           </article>
         `;
       })
@@ -225,8 +227,9 @@ function refreshCartUI() {
 
 // Disable checkout when the cart is empty and keep the CTA visually honest.
 function updateCheckoutButton() {
-  const button =
-    document.querySelector("[data-checkout-link]");
+  const button = document.querySelector(
+    "[data-checkout-link]"
+  );
 
   if (!button) return;
 
@@ -279,8 +282,9 @@ function closeCart() {
 
 // Show a small non-blocking status message.
 function showToast(message) {
-  const toast =
-    document.querySelector("[data-toast]");
+  const toast = document.querySelector(
+    "[data-toast]"
+  );
 
   if (!toast) return;
 
@@ -299,34 +303,36 @@ function renderProductQuantities() {
   document
     .querySelectorAll("[data-product-id]")
     .forEach((card) => {
+
       const id = card.dataset.productId;
       const quantity = getQty(id);
 
-      const number =
-        card.querySelector(".quantity span");
+      const number = card.querySelector(
+        ".quantity span"
+      );
 
-      const minus =
-        card.querySelector(
-          ".quantity button:first-child"
-        );
+      const minus = card.querySelector(
+        ".quantity button:first-child"
+      );
 
-      const plus =
-        card.querySelector(
-          ".quantity button:last-child"
-        );
+      const plus = card.querySelector(
+        ".quantity button:last-child"
+      );
 
       if (number) {
         number.textContent = quantity;
       }
 
       if (minus) {
-        minus.onclick = () =>
+        minus.onclick = () => {
           setQty(id, quantity - 1);
+        };
       }
 
       if (plus) {
-        plus.onclick = () =>
+        plus.onclick = () => {
           setQty(id, quantity + 1);
+        };
       }
     });
 }
@@ -340,10 +346,12 @@ function productCard(product) {
       class="product-card reveal"
       data-product-id="${product.id}"
     >
+
       <a
         href="products.html#${product.id}"
         class="product-media"
       >
+
         <img
           src="${product.image}"
           alt="${product.name}"
@@ -354,26 +362,35 @@ function productCard(product) {
         <span class="product-badge">
           ${product.badge}
         </span>
+
       </a>
 
       <div class="product-info">
+
         <div class="product-topline">
+
           <div>
+
             <div class="product-category">
               ${product.category}
             </div>
 
             <h3>${product.name}</h3>
+
           </div>
 
           <div
             class="quantity"
             aria-label="Quantity for ${product.name}"
           >
+
             <button
               type="button"
               aria-label="Decrease ${product.name}"
-              onclick="setQty('${product.id}', ${quantity - 1})"
+              onclick="setQty(
+                '${product.id}',
+                ${quantity - 1}
+              )"
             >
               −
             </button>
@@ -383,11 +400,16 @@ function productCard(product) {
             <button
               type="button"
               aria-label="Increase ${product.name}"
-              onclick="setQty('${product.id}', ${quantity + 1})"
+              onclick="setQty(
+                '${product.id}',
+                ${quantity + 1}
+              )"
             >
               +
             </button>
+
           </div>
+
         </div>
 
         <p class="product-description">
@@ -395,7 +417,9 @@ function productCard(product) {
         </p>
 
         <div class="product-bottomline">
+
           <div>
+
             <strong>
               ${money(product.price)}
             </strong>
@@ -403,6 +427,7 @@ function productCard(product) {
             <span>
               ${money(product.oldPrice)}
             </span>
+
           </div>
 
           <button
@@ -412,8 +437,11 @@ function productCard(product) {
           >
             Add to cart
           </button>
+
         </div>
+
       </div>
+
     </article>
   `;
 }
@@ -434,17 +462,15 @@ async function loadProducts() {
     updateCartCount();
     updateCheckoutButton();
 
-    const featured =
-      document.querySelector(
-        "[data-featured]"
-      );
+    const featured = document.querySelector(
+      "[data-featured]"
+    );
 
     if (featured) {
-      featured.innerHTML =
-        PRODUCTS
-          .slice(0, 3)
-          .map(productCard)
-          .join("");
+      featured.innerHTML = PRODUCTS
+        .slice(0, 3)
+        .map(productCard)
+        .join("");
     }
 
     if (
@@ -460,16 +486,22 @@ async function loadProducts() {
         "[data-product-select]"
       )
       .forEach((select) => {
-        select.innerHTML =
-          `<option value="">Select a piece</option>` +
-          PRODUCTS
+
+        select.innerHTML = `
+          <option value="">
+            Select a piece
+          </option>
+
+          ${PRODUCTS
             .map(
-              (product) =>
-                `<option value="${product.id}">
+              (product) => `
+                <option value="${product.id}">
                   ${product.name} — ${money(product.price)}
-                </option>`
+                </option>
+              `
             )
-            .join("");
+            .join("")}
+        `;
       });
 
     setupCheckout();
@@ -485,10 +517,9 @@ async function loadProducts() {
 
 // Render the collection page using the selected category.
 function renderProductsGrid() {
-  const grid =
-    document.querySelector(
-      "[data-products-grid]"
-    );
+  const grid = document.querySelector(
+    "[data-products-grid]"
+  );
 
   if (!grid) return;
 
@@ -505,8 +536,9 @@ function renderProductsGrid() {
             product.category === category
         );
 
-  grid.innerHTML =
-    products.map(productCard).join("");
+  grid.innerHTML = products
+    .map(productCard)
+    .join("");
 
   const resultCount =
     document.querySelector(
@@ -529,6 +561,7 @@ function setupNav() {
   document
     .querySelectorAll("[data-nav]")
     .forEach((link) => {
+
       link.classList.toggle(
         "active",
         link.dataset.nav === page
@@ -546,9 +579,9 @@ function observeReveals() {
   if (
     !("IntersectionObserver" in window)
   ) {
-    elements.forEach((element) =>
-      element.classList.add("in")
-    );
+    elements.forEach((element) => {
+      element.classList.add("in");
+    });
 
     return;
   }
@@ -556,8 +589,12 @@ function observeReveals() {
   const observer =
     new IntersectionObserver(
       (entries) => {
+
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+
+          if (!entry.isIntersecting) {
+            return;
+          }
 
           entry.target.classList.add("in");
 
@@ -565,36 +602,37 @@ function observeReveals() {
             entry.target
           );
         });
+
       },
       {
         threshold: 0.1
       }
     );
 
-  elements.forEach((element) =>
-    observer.observe(element)
-  );
+  elements.forEach((element) => {
+    observer.observe(element);
+  });
 }
 
 // Wire the cart drawer controls and keyboard behavior.
 function setupCart() {
   document
     .querySelectorAll("[data-open-cart]")
-    .forEach((button) =>
+    .forEach((button) => {
       button.addEventListener(
         "click",
         openCart
-      )
-    );
+      );
+    });
 
   document
     .querySelectorAll("[data-close-cart]")
-    .forEach((button) =>
+    .forEach((button) => {
       button.addEventListener(
         "click",
         closeCart
-      )
-    );
+      );
+    });
 
   document
     .querySelector(
@@ -608,20 +646,21 @@ function setupCart() {
   document.addEventListener(
     "keydown",
     (event) => {
+
       if (event.key === "Escape") {
         closeCart();
         closeMobileMenu();
       }
+
     }
   );
 }
 
 // Toggle the mobile navigation drawer.
 function toggleMobileMenu() {
-  const menu =
-    document.querySelector(
-      "[data-mobile-menu]"
-    );
+  const menu = document.querySelector(
+    "[data-mobile-menu]"
+  );
 
   const button =
     document.querySelector(
@@ -646,10 +685,9 @@ function toggleMobileMenu() {
 
 // Close the mobile navigation drawer.
 function closeMobileMenu() {
-  const menu =
-    document.querySelector(
-      "[data-mobile-menu]"
-    );
+  const menu = document.querySelector(
+    "[data-mobile-menu]"
+  );
 
   const button =
     document.querySelector(
@@ -685,20 +723,21 @@ function setupMobileMenu() {
     .querySelectorAll(
       "[data-mobile-link]"
     )
-    .forEach((link) =>
+    .forEach((link) => {
+
       link.addEventListener(
         "click",
         closeMobileMenu
-      )
-    );
+      );
+
+    });
 }
 
 // Render the checkout summary and send the order to the Instagram conversation flow.
 function setupCheckout() {
-  const form =
-    document.querySelector(
-      "[data-order-form]"
-    );
+  const form = document.querySelector(
+    "[data-order-form]"
+  );
 
   if (
     !form ||
@@ -715,6 +754,7 @@ function setupCheckout() {
     );
 
   if (!cart.length) {
+
     emptyState?.classList.remove(
       "hidden"
     );
@@ -731,45 +771,52 @@ function setupCheckout() {
 
   if (!summary) return;
 
-  summary.innerHTML =
-    cart
-      .map((item) => {
-        const product =
-          PRODUCTS.find(
-            (entry) =>
-              entry.id === item.id
-          );
+  summary.innerHTML = cart
+    .map((item) => {
 
-        if (!product) return "";
+      const product =
+        PRODUCTS.find(
+          (entry) =>
+            entry.id === item.id
+        );
 
-        return `
-          <div class="order-line">
-            <div>
-              <strong>
-                ${product.name}
-              </strong>
+      if (!product) return "";
 
-              <span>
-                Qty ${item.qty}
-              </span>
-            </div>
+      return `
+        <div class="order-line">
+
+          <div>
 
             <strong>
-              ${money(
-                product.price * item.qty
-              )}
+              ${product.name}
             </strong>
+
+            <span>
+              Qty ${item.qty}
+            </span>
+
           </div>
-        `;
-      })
-      .join("") +
+
+          <strong>
+            ${money(
+              product.price * item.qty
+            )}
+          </strong>
+
+        </div>
+      `;
+
+    })
+    .join("") +
     `
       <div class="order-total">
+
         <span>Total</span>
 
         <strong>
           ${money(cartTotal())}
         </strong>
+
       </div>
     `;
 
@@ -778,6 +825,7 @@ function setupCheckout() {
   form.addEventListener(
     "submit",
     async (event) => {
+
       event.preventDefault();
 
       const data =
@@ -789,6 +837,7 @@ function setupCheckout() {
       const orderLines =
         currentCart
           .map((item) => {
+
             const product =
               PRODUCTS.find(
                 (entry) =>
@@ -798,6 +847,7 @@ function setupCheckout() {
             return `${product.name} × ${item.qty} — ${money(
               product.price * item.qty
             )}`;
+
           })
           .join("\n");
 
@@ -818,16 +868,20 @@ function setupCheckout() {
         "Sent from Dragon Premium Watches website."
       ].join("\n");
 
-      // Copy the complete order message before opening Instagram.
+      // Copy the complete order message.
       try {
+
         await navigator.clipboard.writeText(
           message
         );
+
       } catch {
+
         window.prompt(
           "Copy this order message, then paste it into the Dragon Instagram DM:",
           message
         );
+
       }
 
       // Clear the cart after the order has been prepared.
@@ -837,55 +891,406 @@ function setupCheckout() {
 
       refreshCartUI();
 
-      // Show the success state.
+      // Show the existing desktop success state.
       const success =
         document.querySelector(
           "[data-order-success]"
         );
 
       if (success) {
-        success.classList.add("show");
+        success.classList.add(
+          "show"
+        );
       }
 
-      showToast(
-        "Order copied — opening Dragon Instagram"
-      );
+      // Detect mobile devices.
+      const isMobile =
+        /Android|iPhone|iPad|iPod/i.test(
+          navigator.userAgent
+        );
 
-      // Open Instagram after the order message has been copied.
-      // Desktop keeps the exact DM web URL.
-      // Mobile uses the Instagram universal message link.
-      setTimeout(() => {
-        const isMobile =
-          /Android|iPhone|iPad|iPod/i.test(
-            navigator.userAgent
-          );
+      // DESKTOP
+      // Keep the existing exact Instagram DM behavior.
+      if (!isMobile) {
 
-        // Desktop: open the exact Instagram DM in the browser.
-        if (!isMobile) {
+        showToast(
+          "Order copied — opening Dragon Instagram"
+        );
+
+        setTimeout(() => {
+
           window.location.assign(
             INSTAGRAM_DM_WEB
           );
 
-          return;
-        }
+        }, 350);
 
-        // Mobile: use Instagram's message link.
-        // The OS/Instagram decides whether to open the app or web version.
-        const INSTAGRAM_MOBILE_DM =
-          "https://ig.me/m/drago__n1_";
+        return;
+      }
 
-        window.location.assign(
-          INSTAGRAM_MOBILE_DM
-        );
-      }, 350);
+      // MOBILE
+      // Do NOT use ig.me because some mobile browsers
+      // report it as a broken link.
+      showMobileOrderSuccess(
+        message
+      );
+
     }
   );
+}
+
+// Show a mobile-only order-success panel after the order message is copied.
+function showMobileOrderSuccess(message) {
+
+  let panel = document.querySelector(
+    "[data-mobile-order-success]"
+  );
+
+  if (!panel) {
+
+    panel = document.createElement(
+      "div"
+    );
+
+    panel.setAttribute(
+      "data-mobile-order-success",
+      "true"
+    );
+
+    panel.innerHTML = `
+
+      <div
+        class="dragon-mobile-success-backdrop"
+        data-mobile-success-close
+      ></div>
+
+      <section
+        class="dragon-mobile-success"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dragon-mobile-success-title"
+      >
+
+        <button
+          class="dragon-mobile-success-close"
+          type="button"
+          aria-label="Close"
+          data-mobile-success-close
+        >
+          ×
+        </button>
+
+        <div class="dragon-mobile-success-icon">
+          ✓
+        </div>
+
+        <div class="dragon-mobile-success-eyebrow">
+          ORDER READY
+        </div>
+
+        <h2 id="dragon-mobile-success-title">
+          Your order is ready
+        </h2>
+
+        <p>
+          Your order details have been copied.
+          Open Instagram, open the Dragon chat,
+          paste the message, and send it.
+        </p>
+
+        <button
+          class="dragon-mobile-success-primary"
+          type="button"
+          data-open-instagram
+        >
+          Open Instagram
+        </button>
+
+        <button
+          class="dragon-mobile-success-secondary"
+          type="button"
+          data-copy-order
+        >
+          Copy Order Again
+        </button>
+
+        <button
+          class="dragon-mobile-success-link"
+          type="button"
+          data-mobile-success-close
+        >
+          Close
+        </button>
+
+      </section>
+    `;
+
+    const style =
+      document.createElement(
+        "style"
+      );
+
+    style.textContent = `
+
+      [data-mobile-order-success] {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: grid;
+        place-items: end center;
+      }
+
+      .dragon-mobile-success-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(7px);
+      }
+
+      .dragon-mobile-success {
+        position: relative;
+        width: min(100%, 520px);
+        margin: 12px;
+        padding: 30px 22px 24px;
+        border: 1px solid rgba(212, 175, 55, 0.28);
+        border-radius: 24px;
+        background: #07101f;
+        color: #fff;
+        box-shadow:
+          0 24px 80px rgba(0, 0, 0, 0.55);
+        text-align: center;
+        animation:
+          dragonMobileSuccessIn
+          0.28s ease-out;
+      }
+
+      .dragon-mobile-success-icon {
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 14px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 1px solid rgba(212, 175, 55, 0.55);
+        color: #d4af37;
+        font-size: 25px;
+      }
+
+      .dragon-mobile-success-eyebrow {
+        color: #d4af37;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        font-weight: 700;
+      }
+
+      .dragon-mobile-success h2 {
+        margin: 7px 0 9px;
+        font-size: 26px;
+        line-height: 1.15;
+      }
+
+      .dragon-mobile-success p {
+        margin: 0 auto 20px;
+        max-width: 410px;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .dragon-mobile-success-primary,
+      .dragon-mobile-success-secondary {
+        width: 100%;
+        min-height: 52px;
+        border-radius: 13px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .dragon-mobile-success-primary {
+        border: 1px solid #d4af37;
+        background: #d4af37;
+        color: #07101f;
+      }
+
+      .dragon-mobile-success-secondary {
+        margin-top: 9px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+      }
+
+      .dragon-mobile-success-link {
+        margin-top: 13px;
+        border: 0;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.55);
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .dragon-mobile-success-close {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 25px;
+        cursor: pointer;
+      }
+
+      @keyframes dragonMobileSuccessIn {
+
+        from {
+          transform: translateY(18px);
+          opacity: 0;
+        }
+
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+      }
+
+      @media (min-width: 700px) {
+
+        [data-mobile-order-success] {
+          display: none !important;
+        }
+
+      }
+
+    `;
+
+    document.head.appendChild(
+      style
+    );
+
+    document.body.appendChild(
+      panel
+    );
+
+    // Close the mobile success panel.
+    panel
+      .querySelectorAll(
+        "[data-mobile-success-close]"
+      )
+      .forEach((button) => {
+
+        button.addEventListener(
+          "click",
+          () => {
+            panel.remove();
+          }
+        );
+
+      });
+
+    // Copy the order again.
+    panel
+      .querySelector(
+        "[data-copy-order]"
+      )
+      ?.addEventListener(
+        "click",
+        async () => {
+
+          try {
+
+            await navigator.clipboard.writeText(
+              message
+            );
+
+            showToast(
+              "Order copied again"
+            );
+
+          } catch {
+
+            window.prompt(
+              "Copy your order message:",
+              message
+            );
+
+          }
+
+        }
+      );
+
+    // Open Instagram from an explicit user tap.
+    panel
+      .querySelector(
+        "[data-open-instagram]"
+      )
+      ?.addEventListener(
+        "click",
+        () => {
+
+          // Instagram app deep link.
+          const appUrl =
+            "instagram://user?username=drago__n1_";
+
+          // Browser fallback.
+          const fallbackUrl =
+            INSTAGRAM_PROFILE;
+
+          let appOpened = false;
+
+          // Detect if the browser leaves the page,
+          // which usually means the Instagram app opened.
+          const handleVisibility = () => {
+
+            appOpened =
+              document.visibilityState ===
+              "hidden";
+
+          };
+
+          document.addEventListener(
+            "visibilitychange",
+            handleVisibility,
+            {
+              once: true
+            }
+          );
+
+          // Try to open the Instagram app.
+          window.location.href =
+            appUrl;
+
+          // If the app didn't open,
+          // use the official Instagram profile.
+          setTimeout(() => {
+
+            if (
+              !appOpened &&
+              document.visibilityState ===
+                "visible"
+            ) {
+
+              window.location.assign(
+                fallbackUrl
+              );
+
+            }
+
+          }, 1000);
+
+        }
+      );
+  }
 }
 
 // Start the application after the document is available.
 document.addEventListener(
   "DOMContentLoaded",
   () => {
+
     setupNav();
     setupCart();
     setupMobileMenu();
@@ -904,8 +1309,11 @@ document.addEventListener(
     document
       .querySelectorAll("[data-year]")
       .forEach((element) => {
+
         element.textContent =
           new Date().getFullYear();
+
       });
+
   }
 );
