@@ -3,7 +3,7 @@ const CART_KEY = "dragon_cart_v1";
 // Official Instagram profile
 const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
 
-// Exact Instagram DM on the web
+// Exact Instagram DM
 const INSTAGRAM_DM_WEB =
   "https://www.instagram.com/direct/t/17845443282150287/";
 
@@ -126,9 +126,17 @@ function renderCart() {
     container.innerHTML = `
       <div class="cart-empty">
         <div class="cart-empty-icon">🛒</div>
+
         <h3>Your cart is empty</h3>
-        <p>Choose a timepiece and build your selection.</p>
-        <a href="products.html" class="cart-empty-link">
+
+        <p>
+          Choose a timepiece and build your selection.
+        </p>
+
+        <a
+          href="products.html"
+          class="cart-empty-link"
+        >
           Explore collection
         </a>
       </div>
@@ -225,7 +233,7 @@ function refreshCartUI() {
   updateCheckoutButton();
 }
 
-// Disable checkout when the cart is empty and keep the CTA visually honest.
+// Disable checkout when the cart is empty.
 function updateCheckoutButton() {
   const button = document.querySelector(
     "[data-checkout-link]"
@@ -337,7 +345,7 @@ function renderProductQuantities() {
     });
 }
 
-// Build one clean product card without excessive visual effects.
+// Build one clean product card.
 function productCard(product) {
   const quantity = getQty(product.id);
 
@@ -446,7 +454,7 @@ function productCard(product) {
   `;
 }
 
-// Load the JSON catalog and then initialize UI that depends on product data.
+// Load the JSON catalog.
 async function loadProducts() {
   try {
     const response = await fetch(
@@ -569,7 +577,7 @@ function setupNav() {
     });
 }
 
-// Add reveal-on-scroll only where it helps hierarchy and never blocks content.
+// Add reveal-on-scroll.
 function observeReveals() {
   const elements =
     document.querySelectorAll(
@@ -614,7 +622,7 @@ function observeReveals() {
   });
 }
 
-// Wire the cart drawer controls and keyboard behavior.
+// Wire the cart drawer controls.
 function setupCart() {
   document
     .querySelectorAll("[data-open-cart]")
@@ -708,7 +716,7 @@ function closeMobileMenu() {
   );
 }
 
-// Initialize mobile navigation on pages that contain it.
+// Initialize mobile navigation.
 function setupMobileMenu() {
   document
     .querySelector(
@@ -733,7 +741,7 @@ function setupMobileMenu() {
     });
 }
 
-// Render the checkout summary and send the order to the Instagram conversation flow.
+// Render checkout and prepare the Instagram DM message.
 function setupCheckout() {
   const form = document.querySelector(
     "[data-order-form]"
@@ -844,11 +852,14 @@ function setupCheckout() {
                   entry.id === item.id
               );
 
+            if (!product) return "";
+
             return `${product.name} × ${item.qty} — ${money(
               product.price * item.qty
             )}`;
 
           })
+          .filter(Boolean)
           .join("\n");
 
       const message = [
@@ -884,7 +895,7 @@ function setupCheckout() {
 
       }
 
-      // Clear the cart after the order has been prepared.
+      // Clear the cart after preparing the order.
       localStorage.removeItem(
         CART_KEY
       );
@@ -910,11 +921,11 @@ function setupCheckout() {
         );
 
       // DESKTOP
-      // Keep the existing exact Instagram DM behavior.
+      // Open the exact Instagram DM.
       if (!isMobile) {
 
         showToast(
-          "Order copied — opening Dragon Instagram"
+          "Order copied — opening Dragon DM"
         );
 
         setTimeout(() => {
@@ -929,8 +940,7 @@ function setupCheckout() {
       }
 
       // MOBILE
-      // Do NOT use ig.me because some mobile browsers
-      // report it as a broken link.
+      // Show the order-ready panel.
       showMobileOrderSuccess(
         message
       );
@@ -939,7 +949,7 @@ function setupCheckout() {
   );
 }
 
-// Show a mobile-only order-success panel after the order message is copied.
+// Show the mobile order-success panel.
 function showMobileOrderSuccess(message) {
 
   let panel = document.querySelector(
@@ -994,8 +1004,7 @@ function showMobileOrderSuccess(message) {
 
         <p>
           Your order details have been copied.
-          Open Instagram, open the Dragon chat,
-          paste the message, and send it.
+          Tap below to open the Dragon Instagram DM.
         </p>
 
         <button
@@ -1003,7 +1012,7 @@ function showMobileOrderSuccess(message) {
           type="button"
           data-open-instagram
         >
-          Open Instagram
+          Open Dragon DM
         </button>
 
         <button
@@ -1222,7 +1231,7 @@ function showMobileOrderSuccess(message) {
         }
       );
 
-    // Open Instagram from an explicit user tap.
+    // Open the exact Instagram DM.
     panel
       .querySelector(
         "[data-open-instagram]"
@@ -1231,55 +1240,23 @@ function showMobileOrderSuccess(message) {
         "click",
         () => {
 
-          // Instagram app deep link.
-          const appUrl =
-            "instagram://user?username=drago__n1_";
+          /*
+           * IMPORTANT:
+           *
+           * We intentionally use the exact Instagram DM URL.
+           *
+           * We do NOT use:
+           * instagram://user
+           * instagram://direct
+           * ig.me
+           *
+           * because these can produce "link is broken"
+           * on some mobile devices.
+           */
 
-          // Browser fallback.
-          const fallbackUrl =
-            INSTAGRAM_PROFILE;
-
-          let appOpened = false;
-
-          // Detect if the browser leaves the page,
-          // which usually means the Instagram app opened.
-          const handleVisibility = () => {
-
-            appOpened =
-              document.visibilityState ===
-              "hidden";
-
-          };
-
-          document.addEventListener(
-            "visibilitychange",
-            handleVisibility,
-            {
-              once: true
-            }
+          window.location.assign(
+            INSTAGRAM_DM_WEB
           );
-
-          // Try to open the Instagram app.
-          window.location.href =
-            appUrl;
-
-          // If the app didn't open,
-          // use the official Instagram profile.
-          setTimeout(() => {
-
-            if (
-              !appOpened &&
-              document.visibilityState ===
-                "visible"
-            ) {
-
-              window.location.assign(
-                fallbackUrl
-              );
-
-            }
-
-          }, 1000);
 
         }
       );
