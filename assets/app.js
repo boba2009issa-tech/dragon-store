@@ -1,14 +1,20 @@
-// Official Instagram profile
-const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
+const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1__/";
 
-// Exact Instagram DM on the web
 const INSTAGRAM_DM_WEB =
   "https://www.instagram.com/direct/t/17845443282150287/";
 
-// Exact Instagram DM deep link for the mobile app
-const INSTAGRAM_DM_APP =
-  "https://ig.me/m/drago__n1__";
+function openInstagramDM() {
+  const appUrl = "instagram://direct/t/17845443282150287/";
+  const webUrl = INSTAGRAM_DM_WEB;
 
+  // Try opening the Instagram app
+  window.location.href = appUrl;
+
+  // Fallback to Instagram Web if the app doesn't open
+  setTimeout(() => {
+    window.location.href = webUrl;
+  }, 1200);
+}
 let PRODUCTS = [];
 // Format Egyptian pound prices consistently across the site.
 function money(value) {
