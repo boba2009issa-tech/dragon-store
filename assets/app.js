@@ -429,8 +429,7 @@ function setupCheckout() {
 
     showToast("Order copied — opening Dragon Instagram");
 
-    // Prefer the Instagram app on phones, then fall back to the real web profile.
-   // Open the exact Instagram DM after the order is copied.
+  // Open the exact Instagram DM after the order is copied.
 setTimeout(() => {
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
