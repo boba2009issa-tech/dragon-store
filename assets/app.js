@@ -1,26 +1,18 @@
-// Store the cart using this localStorage key.
 const CART_KEY = "dragon_cart_v1";
 
 // Official Instagram profile.
-const INSTAGRAM_PROFILE =
-  "instagram://direct/t/17845443282150287/";
+const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
 
 // Exact Instagram DM on the web.
 const INSTAGRAM_DM_WEB =
   "https://www.instagram.com/direct/t/17845443282150287/";
 
-// Exact Instagram DM deep link for the mobile app.
-const INSTAGRAM_DM_APP =
-  "instagram://direct/t/17845443282150287/";
-
 let PRODUCTS = [];
-
 
 // Format Egyptian pound prices consistently across the site.
 function money(value) {
   return `${Number(value).toLocaleString("en-EG")} EGP`;
 }
-
 
 // Read the cart safely from localStorage.
 function getCart() {
@@ -31,52 +23,34 @@ function getCart() {
   }
 }
 
-
 // Save the cart and refresh every cart-related UI element.
 function saveCart(cart) {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   refreshCartUI();
 }
 
-
 // Return the total number of pieces currently selected.
 function cartCount() {
-  return getCart().reduce(
-    (total, item) => total + item.qty,
-    0
-  );
+  return getCart().reduce((total, item) => total + item.qty, 0);
 }
-
 
 // Update the small cart badge in every page header.
 function updateCartCount() {
   const count = cartCount();
 
-  document
-    .querySelectorAll("[data-cart-count]")
-    .forEach((element) => {
-      element.textContent = count;
-      element.classList.toggle(
-        "hidden",
-        count === 0
-      );
-    });
+  document.querySelectorAll("[data-cart-count]").forEach((element) => {
+    element.textContent = count;
+    element.classList.toggle("hidden", count === 0);
+  });
 }
-
 
 // Add one unit of a product to the cart.
 function addToCart(id) {
-  const product = PRODUCTS.find(
-    (item) => item.id === id
-  );
-
+  const product = PRODUCTS.find((item) => item.id === id);
   if (!product) return;
 
   const cart = getCart();
-
-  const existing = cart.find(
-    (item) => item.id === id
-  );
+  const existing = cart.find((item) => item.id === id);
 
   if (existing) {
     existing.qty += 1;
@@ -88,27 +62,16 @@ function addToCart(id) {
   }
 
   saveCart(cart);
-
-  showToast(
-    `${product.name} added to cart`
-  );
+  showToast(`${product.name} added to cart`);
 }
-
 
 // Set an exact quantity for one product.
 function setQty(id, quantity) {
   const cart = getCart();
+  const item = cart.find((entry) => entry.id === id);
+  const nextQuantity = Math.max(0, Number(quantity));
 
-  const item = cart.find(
-    (entry) => entry.id === id
-  );
-
-  const nextQuantity = Math.max(
-    0,
-    Number(quantity)
-  );
-
-  // Create the cart item if it does not exist.
+  // A plus button on a product with quantity 0 should create the cart line.
   if (!item) {
     if (nextQuantity > 0) {
       cart.push({
@@ -124,59 +87,43 @@ function setQty(id, quantity) {
   item.qty = nextQuantity;
 
   saveCart(
-    cart.filter(
-      (entry) => entry.qty > 0
-    )
+    cart.filter((entry) => entry.qty > 0)
   );
 }
-
 
 // Remove a product completely from the cart.
 function removeItem(id) {
   saveCart(
-    getCart().filter(
-      (item) => item.id !== id
-    )
+    getCart().filter((item) => item.id !== id)
   );
 }
 
-
-// Calculate the current cart subtotal.
+// Calculate the current cart subtotal from the product catalog.
 function cartTotal() {
-  return getCart().reduce(
-    (total, item) => {
-      const product = PRODUCTS.find(
-        (entry) => entry.id === item.id
-      );
+  return getCart().reduce((total, item) => {
+    const product = PRODUCTS.find(
+      (entry) => entry.id === item.id
+    );
 
-      return (
-        total +
-        (product
-          ? product.price * item.qty
-          : 0)
-      );
-    },
-    0
-  );
+    return total + (
+      product
+        ? product.price * item.qty
+        : 0
+    );
+  }, 0);
 }
 
-
-// Return the quantity of a specific product.
+// Return the quantity of a specific product in the cart.
 function getQty(id) {
   return (
-    getCart().find(
-      (item) => item.id === id
-    )?.qty || 0
+    getCart().find((item) => item.id === id)?.qty || 0
   );
 }
-
 
 // Render the cart drawer contents.
 function renderCart() {
   const container =
-    document.querySelector(
-      "[data-cart-items]"
-    );
+    document.querySelector("[data-cart-items]");
 
   if (!container) return;
 
@@ -186,13 +133,8 @@ function renderCart() {
     container.innerHTML = `
       <div class="cart-empty">
         <div class="cart-empty-icon">🛒</div>
-
         <h3>Your cart is empty</h3>
-
-        <p>
-          Choose a timepiece and build your selection.
-        </p>
-
+        <p>Choose a timepiece and build your selection.</p>
         <a
           href="products.html"
           class="cart-empty-link"
@@ -212,7 +154,6 @@ function renderCart() {
 
         return `
           <article class="cart-item">
-
             <img
               src="${product.image}"
               alt="${product.name}"
@@ -221,24 +162,18 @@ function renderCart() {
             >
 
             <div class="cart-item-info">
-
               <div class="cart-item-category">
                 ${product.category}
               </div>
 
-              <h3>
-                ${product.name}
-              </h3>
+              <h3>${product.name}</h3>
 
-              <p>
-                ${money(product.price)}
-              </p>
+              <p>${money(product.price)}</p>
 
               <div
                 class="quantity"
                 aria-label="Quantity for ${product.name}"
               >
-
                 <button
                   type="button"
                   aria-label="Decrease ${product.name}"
@@ -247,9 +182,7 @@ function renderCart() {
                   −
                 </button>
 
-                <span>
-                  ${item.qty}
-                </span>
+                <span>${item.qty}</span>
 
                 <button
                   type="button"
@@ -258,9 +191,7 @@ function renderCart() {
                 >
                   +
                 </button>
-
               </div>
-
             </div>
 
             <button
@@ -271,7 +202,6 @@ function renderCart() {
             >
               Remove
             </button>
-
           </article>
         `;
       })
@@ -281,13 +211,11 @@ function renderCart() {
   document
     .querySelectorAll("[data-cart-total]")
     .forEach((element) => {
-      element.textContent =
-        money(cartTotal());
+      element.textContent = money(cartTotal());
     });
 }
 
-
-// Refresh all cart-related UI.
+// Refresh the cart drawer, badge, product quantities and checkout button state.
 function refreshCartUI() {
   renderCart();
   updateCartCount();
@@ -295,18 +223,14 @@ function refreshCartUI() {
   updateCheckoutButton();
 }
 
-
-// Disable checkout when cart is empty.
+// Disable checkout when the cart is empty and keep the CTA visually honest.
 function updateCheckoutButton() {
   const button =
-    document.querySelector(
-      "[data-checkout-link]"
-    );
+    document.querySelector("[data-checkout-link]");
 
   if (!button) return;
 
-  const hasItems =
-    getCart().length > 0;
+  const hasItems = getCart().length > 0;
 
   button.classList.toggle(
     "is-disabled",
@@ -323,8 +247,7 @@ function updateCheckoutButton() {
     : "products.html";
 }
 
-
-// Open the cart drawer.
+// Open the cart drawer and lock page scrolling.
 function openCart() {
   document
     .querySelector("[data-cart]")
@@ -339,8 +262,7 @@ function openCart() {
   );
 }
 
-
-// Close the cart drawer.
+// Close the cart drawer and restore page scrolling.
 function closeCart() {
   document
     .querySelector("[data-cart]")
@@ -355,45 +277,33 @@ function closeCart() {
   );
 }
 
-
-// Show a small status message.
+// Show a small non-blocking status message.
 function showToast(message) {
   const toast =
-    document.querySelector(
-      "[data-toast]"
-    );
+    document.querySelector("[data-toast]");
 
   if (!toast) return;
 
   toast.textContent = message;
-
   toast.classList.add("show");
 
-  clearTimeout(
-    window.__dragonToast
-  );
+  clearTimeout(window.__dragonToast);
 
-  window.__dragonToast =
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2600);
+  window.__dragonToast = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
 }
 
-
-// Keep product quantities synchronized.
+// Keep product-card quantity controls synchronized with localStorage.
 function renderProductQuantities() {
   document
     .querySelectorAll("[data-product-id]")
     .forEach((card) => {
-      const id =
-        card.dataset.productId;
-
+      const id = card.dataset.productId;
       const quantity = getQty(id);
 
       const number =
-        card.querySelector(
-          ".quantity span"
-        );
+        card.querySelector(".quantity span");
 
       const minus =
         card.querySelector(
@@ -406,45 +316,34 @@ function renderProductQuantities() {
         );
 
       if (number) {
-        number.textContent =
-          quantity;
+        number.textContent = quantity;
       }
 
       if (minus) {
         minus.onclick = () =>
-          setQty(
-            id,
-            quantity - 1
-          );
+          setQty(id, quantity - 1);
       }
 
       if (plus) {
         plus.onclick = () =>
-          setQty(
-            id,
-            quantity + 1
-          );
+          setQty(id, quantity + 1);
       }
     });
 }
 
-
-// Build one product card.
+// Build one clean product card without excessive visual effects.
 function productCard(product) {
-  const quantity =
-    getQty(product.id);
+  const quantity = getQty(product.id);
 
   return `
     <article
       class="product-card reveal"
       data-product-id="${product.id}"
     >
-
       <a
         href="products.html#${product.id}"
         class="product-media"
       >
-
         <img
           src="${product.image}"
           alt="${product.name}"
@@ -455,30 +354,22 @@ function productCard(product) {
         <span class="product-badge">
           ${product.badge}
         </span>
-
       </a>
 
       <div class="product-info">
-
         <div class="product-topline">
-
           <div>
-
             <div class="product-category">
               ${product.category}
             </div>
 
-            <h3>
-              ${product.name}
-            </h3>
-
+            <h3>${product.name}</h3>
           </div>
 
           <div
             class="quantity"
             aria-label="Quantity for ${product.name}"
           >
-
             <button
               type="button"
               aria-label="Decrease ${product.name}"
@@ -487,9 +378,7 @@ function productCard(product) {
               −
             </button>
 
-            <span>
-              ${quantity}
-            </span>
+            <span>${quantity}</span>
 
             <button
               type="button"
@@ -498,9 +387,7 @@ function productCard(product) {
             >
               +
             </button>
-
           </div>
-
         </div>
 
         <p class="product-description">
@@ -508,9 +395,7 @@ function productCard(product) {
         </p>
 
         <div class="product-bottomline">
-
           <div>
-
             <strong>
               ${money(product.price)}
             </strong>
@@ -518,7 +403,6 @@ function productCard(product) {
             <span>
               ${money(product.oldPrice)}
             </span>
-
           </div>
 
           <button
@@ -528,35 +412,23 @@ function productCard(product) {
           >
             Add to cart
           </button>
-
         </div>
-
       </div>
-
     </article>
   `;
 }
 
-
-// Load the JSON catalog.
+// Load the JSON catalog and then initialize UI that depends on product data.
 async function loadProducts() {
   try {
-    const response =
-      await fetch(
-        "assets/products.json",
-        {
-          cache: "no-store"
-        }
-      );
+    const response = await fetch(
+      "assets/products.json",
+      {
+        cache: "no-store"
+      }
+    );
 
-    if (!response.ok) {
-      throw new Error(
-        `Products request failed: ${response.status}`
-      );
-    }
-
-    PRODUCTS =
-      await response.json();
+    PRODUCTS = await response.json();
 
     renderCart();
     updateCartCount();
@@ -589,20 +461,13 @@ async function loadProducts() {
       )
       .forEach((select) => {
         select.innerHTML =
-          `
-          <option value="">
-            Select a piece
-          </option>
-          ` +
+          `<option value="">Select a piece</option>` +
           PRODUCTS
             .map(
               (product) =>
-                `
-                <option value="${product.id}">
-                  ${product.name} —
-                  ${money(product.price)}
-                </option>
-                `
+                `<option value="${product.id}">
+                  ${product.name} — ${money(product.price)}
+                </option>`
             )
             .join("");
       });
@@ -618,8 +483,7 @@ async function loadProducts() {
   }
 }
 
-
-// Render the collection page.
+// Render the collection page using the selected category.
 function renderProductsGrid() {
   const grid =
     document.querySelector(
@@ -638,14 +502,11 @@ function renderProductsGrid() {
       ? PRODUCTS
       : PRODUCTS.filter(
           (product) =>
-            product.category ===
-            category
+            product.category === category
         );
 
   grid.innerHTML =
-    products
-      .map(productCard)
-      .join("");
+    products.map(productCard).join("");
 
   const resultCount =
     document.querySelector(
@@ -660,8 +521,7 @@ function renderProductsGrid() {
   observeReveals();
 }
 
-
-// Highlight the current navigation item.
+// Highlight the current desktop navigation item.
 function setupNav() {
   const page =
     document.body.dataset.page;
@@ -676,8 +536,7 @@ function setupNav() {
     });
 }
 
-
-// Add reveal-on-scroll.
+// Add reveal-on-scroll only where it helps hierarchy and never blocks content.
 function observeReveals() {
   const elements =
     document.querySelectorAll(
@@ -698,12 +557,9 @@ function observeReveals() {
     new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting)
-            return;
+          if (!entry.isIntersecting) return;
 
-          entry.target.classList.add(
-            "in"
-          );
+          entry.target.classList.add("in");
 
           observer.unobserve(
             entry.target
@@ -720,30 +576,25 @@ function observeReveals() {
   );
 }
 
-
-// Wire cart drawer controls.
+// Wire the cart drawer controls and keyboard behavior.
 function setupCart() {
   document
-    .querySelectorAll(
-      "[data-open-cart]"
-    )
-    .forEach((button) => {
+    .querySelectorAll("[data-open-cart]")
+    .forEach((button) =>
       button.addEventListener(
         "click",
         openCart
-      );
-    });
+      )
+    );
 
   document
-    .querySelectorAll(
-      "[data-close-cart]"
-    )
-    .forEach((button) => {
+    .querySelectorAll("[data-close-cart]")
+    .forEach((button) =>
       button.addEventListener(
         "click",
         closeCart
-      );
-    });
+      )
+    );
 
   document
     .querySelector(
@@ -765,8 +616,7 @@ function setupCart() {
   );
 }
 
-
-// Toggle the mobile navigation.
+// Toggle the mobile navigation drawer.
 function toggleMobileMenu() {
   const menu =
     document.querySelector(
@@ -781,9 +631,7 @@ function toggleMobileMenu() {
   if (!menu || !button) return;
 
   const isOpen =
-    menu.classList.toggle(
-      "open"
-    );
+    menu.classList.toggle("open");
 
   button.setAttribute(
     "aria-expanded",
@@ -796,8 +644,7 @@ function toggleMobileMenu() {
   );
 }
 
-
-// Close the mobile navigation.
+// Close the mobile navigation drawer.
 function closeMobileMenu() {
   const menu =
     document.querySelector(
@@ -811,9 +658,7 @@ function closeMobileMenu() {
 
   if (!menu || !button) return;
 
-  menu.classList.remove(
-    "open"
-  );
+  menu.classList.remove("open");
 
   button.setAttribute(
     "aria-expanded",
@@ -825,8 +670,7 @@ function closeMobileMenu() {
   );
 }
 
-
-// Initialize mobile navigation.
+// Initialize mobile navigation on pages that contain it.
 function setupMobileMenu() {
   document
     .querySelector(
@@ -841,76 +685,15 @@ function setupMobileMenu() {
     .querySelectorAll(
       "[data-mobile-link]"
     )
-    .forEach((link) => {
+    .forEach((link) =>
       link.addEventListener(
         "click",
         closeMobileMenu
-      );
-    });
+      )
+    );
 }
 
-
-// Open the exact Instagram DM.
-function openInstagramDM() {
-  const isMobile =
-    /Android|iPhone|iPad|iPod/i.test(
-      navigator.userAgent
-    );
-
-  // Desktop: open Instagram Web.
-  if (!isMobile) {
-    window.location.assign(
-      INSTAGRAM_DM_WEB
-    );
-
-    return;
-  }
-
-  let appOpened = false;
-
-  // Detect whether the browser was hidden
-  // because Instagram opened.
-  const onVisibilityChange =
-    () => {
-      if (document.hidden) {
-        appOpened = true;
-
-        document.removeEventListener(
-          "visibilitychange",
-          onVisibilityChange
-        );
-      }
-    };
-
-  document.addEventListener(
-    "visibilitychange",
-    onVisibilityChange
-  );
-
-  // Try opening the Instagram app.
-  window.location.href =
-    INSTAGRAM_DM_APP;
-
-  // Fallback to Instagram Web.
-  setTimeout(() => {
-    document.removeEventListener(
-      "visibilitychange",
-      onVisibilityChange
-    );
-
-    if (
-      !appOpened &&
-      !document.hidden
-    ) {
-      window.location.assign(
-        INSTAGRAM_DM_WEB
-      );
-    }
-  }, 1800);
-}
-
-
-// Render checkout and handle order submission.
+// Render the checkout summary and send the order to the Instagram conversation flow.
 function setupCheckout() {
   const form =
     document.querySelector(
@@ -931,15 +714,12 @@ function setupCheckout() {
       "[data-checkout-empty]"
     );
 
-  // Show empty checkout state.
   if (!cart.length) {
     emptyState?.classList.remove(
       "hidden"
     );
 
-    form.classList.add(
-      "hidden"
-    );
+    form.classList.add("hidden");
 
     return;
   }
@@ -951,7 +731,6 @@ function setupCheckout() {
 
   if (!summary) return;
 
-  // Render order summary.
   summary.innerHTML =
     cart
       .map((item) => {
@@ -965,9 +744,7 @@ function setupCheckout() {
 
         return `
           <div class="order-line">
-
             <div>
-
               <strong>
                 ${product.name}
               </strong>
@@ -975,38 +752,29 @@ function setupCheckout() {
               <span>
                 Qty ${item.qty}
               </span>
-
             </div>
 
             <strong>
               ${money(
-                product.price *
-                item.qty
+                product.price * item.qty
               )}
             </strong>
-
           </div>
         `;
       })
       .join("") +
     `
       <div class="order-total">
-
-        <span>
-          Total
-        </span>
+        <span>Total</span>
 
         <strong>
           ${money(cartTotal())}
         </strong>
-
       </div>
     `;
 
   form.dataset.ready = "true";
 
-
-  // Handle checkout form submission.
   form.addEventListener(
     "submit",
     async (event) => {
@@ -1027,20 +795,12 @@ function setupCheckout() {
                   entry.id === item.id
               );
 
-            if (!product) {
-              return "";
-            }
-
             return `${product.name} × ${item.qty} — ${money(
-              product.price *
-              item.qty
+              product.price * item.qty
             )}`;
           })
-          .filter(Boolean)
           .join("\n");
 
-
-      // Build the exact order message.
       const message = [
         "DRAGON PREMIUM WATCHES — NEW ORDER",
         "",
@@ -1048,9 +808,7 @@ function setupCheckout() {
         `Phone: ${data.get("phone")}`,
         `Governorate: ${data.get("governorate")}`,
         `Address: ${data.get("address")}`,
-        `Notes: ${
-          data.get("notes") || "—"
-        }`,
+        `Notes: ${data.get("notes") || "—"}`,
         "",
         "ORDER DETAILS:",
         orderLines,
@@ -1060,8 +818,7 @@ function setupCheckout() {
         "Sent from Dragon Premium Watches website."
       ].join("\n");
 
-
-      // Copy the order message to the clipboard.
+      // Copy the complete order message before opening Instagram.
       try {
         await navigator.clipboard.writeText(
           message
@@ -1073,56 +830,67 @@ function setupCheckout() {
         );
       }
 
-
-      // Clear the cart after preparing the order.
+      // Clear the cart after the order has been prepared.
       localStorage.removeItem(
         CART_KEY
       );
 
       refreshCartUI();
 
-
-      // Show the success message.
+      // Show the success state.
       const success =
         document.querySelector(
           "[data-order-success]"
         );
 
       if (success) {
-        success.classList.add(
-          "show"
-        );
+        success.classList.add("show");
       }
-
 
       showToast(
         "Order copied — opening Dragon Instagram"
       );
 
-
-      // Give the UI a moment before opening Instagram.
+      // Open Instagram after the order message has been copied.
+      // Desktop keeps the exact DM web URL.
+      // Mobile uses the Instagram universal message link.
       setTimeout(() => {
-        openInstagramDM();
+        const isMobile =
+          /Android|iPhone|iPad|iPod/i.test(
+            navigator.userAgent
+          );
+
+        // Desktop: open the exact Instagram DM in the browser.
+        if (!isMobile) {
+          window.location.assign(
+            INSTAGRAM_DM_WEB
+          );
+
+          return;
+        }
+
+        // Mobile: use Instagram's message link.
+        // The OS/Instagram decides whether to open the app or web version.
+        const INSTAGRAM_MOBILE_DM =
+          "https://ig.me/m/drago__n1_";
+
+        window.location.assign(
+          INSTAGRAM_MOBILE_DM
+        );
       }, 350);
     }
   );
 }
 
-
-// Start the application after the document loads.
+// Start the application after the document is available.
 document.addEventListener(
   "DOMContentLoaded",
   () => {
     setupNav();
-
     setupCart();
-
     setupMobileMenu();
-
     loadProducts();
 
-
-    // Product category filter.
     const filter =
       document.querySelector(
         "[data-filter]"
@@ -1133,12 +901,8 @@ document.addEventListener(
       renderProductsGrid
     );
 
-
-    // Update the footer year.
     document
-      .querySelectorAll(
-        "[data-year]"
-      )
+      .querySelectorAll("[data-year]")
       .forEach((element) => {
         element.textContent =
           new Date().getFullYear();
