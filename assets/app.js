@@ -7,6 +7,10 @@ const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
 const INSTAGRAM_DM_WEB =
   "https://www.instagram.com/direct/t/17845443282150287/";
 
+// Instagram mobile DM deep link
+const INSTAGRAM_DM_APP =
+  "instagram://direct/t/17845443282150287/";
+
 let PRODUCTS = [];
 
 // Format Egyptian pound prices consistently across the site.
@@ -31,47 +35,77 @@ function saveCart(cart) {
 
 // Return the total number of pieces currently selected.
 function cartCount() {
-  return getCart().reduce((total, item) => total + item.qty, 0);
+  return getCart().reduce(
+    (total, item) => total + item.qty,
+    0
+  );
 }
 
 // Update the small cart badge in every page header.
 function updateCartCount() {
   const count = cartCount();
 
-  document.querySelectorAll("[data-cart-count]").forEach((element) => {
-    element.textContent = count;
-    element.classList.toggle("hidden", count === 0);
-  });
+  document
+    .querySelectorAll("[data-cart-count]")
+    .forEach((element) => {
+      element.textContent = count;
+      element.classList.toggle(
+        "hidden",
+        count === 0
+      );
+    });
 }
 
 // Add one unit of a product to the cart.
 function addToCart(id) {
-  const product = PRODUCTS.find((item) => item.id === id);
+  const product = PRODUCTS.find(
+    (item) => item.id === id
+  );
+
   if (!product) return;
 
   const cart = getCart();
-  const existing = cart.find((item) => item.id === id);
+
+  const existing = cart.find(
+    (item) => item.id === id
+  );
 
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ id, qty: 1 });
+    cart.push({
+      id,
+      qty: 1
+    });
   }
 
   saveCart(cart);
-  showToast(`${product.name} added to cart`);
+
+  showToast(
+    `${product.name} added to cart`
+  );
 }
 
 // Set an exact quantity for one product.
 function setQty(id, quantity) {
   const cart = getCart();
-  const item = cart.find((entry) => entry.id === id);
-  const nextQuantity = Math.max(0, Number(quantity));
+
+  const item = cart.find(
+    (entry) => entry.id === id
+  );
+
+  const nextQuantity = Math.max(
+    0,
+    Number(quantity)
+  );
 
   // A plus button on a product with quantity 0 should create the cart line.
   if (!item) {
     if (nextQuantity > 0) {
-      cart.push({ id, qty: nextQuantity });
+      cart.push({
+        id,
+        qty: nextQuantity
+      });
     }
 
     saveCart(cart);
@@ -81,42 +115,57 @@ function setQty(id, quantity) {
   item.qty = nextQuantity;
 
   saveCart(
-    cart.filter((entry) => entry.qty > 0)
+    cart.filter(
+      (entry) => entry.qty > 0
+    )
   );
 }
 
 // Remove a product completely from the cart.
 function removeItem(id) {
   saveCart(
-    getCart().filter((item) => item.id !== id)
+    getCart().filter(
+      (item) => item.id !== id
+    )
   );
 }
 
 // Calculate the current cart subtotal from the product catalog.
 function cartTotal() {
-  return getCart().reduce((total, item) => {
-    const product = PRODUCTS.find(
-      (entry) => entry.id === item.id
-    );
+  return getCart().reduce(
+    (total, item) => {
+      const product = PRODUCTS.find(
+        (entry) => entry.id === item.id
+      );
 
-    return total + (
-      product ? product.price * item.qty : 0
-    );
-  }, 0);
+      return (
+        total +
+        (
+          product
+            ? product.price * item.qty
+            : 0
+        )
+      );
+    },
+    0
+  );
 }
 
 // Return the quantity of a specific product in the cart.
 function getQty(id) {
-  return getCart().find(
-    (item) => item.id === id
-  )?.qty || 0;
+  return (
+    getCart().find(
+      (item) => item.id === id
+    )?.qty || 0
+  );
 }
 
 // Render the cart drawer contents.
 function renderCart() {
-  const container = document.querySelector(
-    "[data-cart-items]"
-  );
+  const container =
+    document.querySelector(
+      "[data-cart-items]"
+    );
 
   if (!container) return;
 
@@ -125,9 +174,14 @@ function renderCart() {
   if (!cart.length) {
     container.innerHTML = `
       <div class="cart-empty">
-        <div class="cart-empty-icon">🛒</div>
 
-        <h3>Your cart is empty</h3>
+        <div class="cart-empty-icon">
+          🛒
+        </div>
+
+        <h3>
+          Your cart is empty
+        </h3>
 
         <p>
           Choose a timepiece and build your selection.
@@ -139,14 +193,18 @@ function renderCart() {
         >
           Explore collection
         </a>
+
       </div>
     `;
   } else {
     container.innerHTML = cart
       .map((item) => {
-        const product = PRODUCTS.find(
-          (entry) => entry.id === item.id
-        );
+
+        const product =
+          PRODUCTS.find(
+            (entry) =>
+              entry.id === item.id
+          );
 
         if (!product) return "";
 
@@ -166,9 +224,13 @@ function renderCart() {
                 ${product.category}
               </div>
 
-              <h3>${product.name}</h3>
+              <h3>
+                ${product.name}
+              </h3>
 
-              <p>${money(product.price)}</p>
+              <p>
+                ${money(product.price)}
+              </p>
 
               <div
                 class="quantity"
@@ -186,7 +248,9 @@ function renderCart() {
                   −
                 </button>
 
-                <span>${item.qty}</span>
+                <span>
+                  ${item.qty}
+                </span>
 
                 <button
                   type="button"
@@ -219,9 +283,12 @@ function renderCart() {
   }
 
   document
-    .querySelectorAll("[data-cart-total]")
+    .querySelectorAll(
+      "[data-cart-total]"
+    )
     .forEach((element) => {
-      element.textContent = money(cartTotal());
+      element.textContent =
+        money(cartTotal());
     });
 }
 
@@ -235,13 +302,15 @@ function refreshCartUI() {
 
 // Disable checkout when the cart is empty.
 function updateCheckoutButton() {
-  const button = document.querySelector(
-    "[data-checkout-link]"
-  );
+  const button =
+    document.querySelector(
+      "[data-checkout-link]"
+    );
 
   if (!button) return;
 
-  const hasItems = getCart().length > 0;
+  const hasItems =
+    getCart().length > 0;
 
   button.classList.toggle(
     "is-disabled",
@@ -265,7 +334,9 @@ function openCart() {
     ?.classList.add("open");
 
   document
-    .querySelector("[data-cart-overlay]")
+    .querySelector(
+      "[data-cart-overlay]"
+    )
     ?.classList.add("open");
 
   document.body.classList.add(
@@ -280,7 +351,9 @@ function closeCart() {
     ?.classList.remove("open");
 
   document
-    .querySelector("[data-cart-overlay]")
+    .querySelector(
+      "[data-cart-overlay]"
+    )
     ?.classList.remove("open");
 
   document.body.classList.remove(
@@ -290,56 +363,78 @@ function closeCart() {
 
 // Show a small non-blocking status message.
 function showToast(message) {
-  const toast = document.querySelector(
-    "[data-toast]"
-  );
+  const toast =
+    document.querySelector(
+      "[data-toast]"
+    );
 
   if (!toast) return;
 
   toast.textContent = message;
+
   toast.classList.add("show");
 
-  clearTimeout(window.__dragonToast);
+  clearTimeout(
+    window.__dragonToast
+  );
 
-  window.__dragonToast = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2600);
+  window.__dragonToast =
+    setTimeout(() => {
+      toast.classList.remove(
+        "show"
+      );
+    }, 2600);
 }
 
 // Keep product-card quantity controls synchronized with localStorage.
 function renderProductQuantities() {
   document
-    .querySelectorAll("[data-product-id]")
+    .querySelectorAll(
+      "[data-product-id]"
+    )
     .forEach((card) => {
 
-      const id = card.dataset.productId;
-      const quantity = getQty(id);
+      const id =
+        card.dataset.productId;
 
-      const number = card.querySelector(
-        ".quantity span"
-      );
+      const quantity =
+        getQty(id);
 
-      const minus = card.querySelector(
-        ".quantity button:first-child"
-      );
+      const number =
+        card.querySelector(
+          ".quantity span"
+        );
 
-      const plus = card.querySelector(
-        ".quantity button:last-child"
-      );
+      const minus =
+        card.querySelector(
+          ".quantity button:first-child"
+        );
+
+      const plus =
+        card.querySelector(
+          ".quantity button:last-child"
+        );
 
       if (number) {
-        number.textContent = quantity;
+        number.textContent =
+          quantity;
       }
 
       if (minus) {
         minus.onclick = () => {
-          setQty(id, quantity - 1);
+          setQty(
+            id,
+            quantity - 1
+          );
         };
       }
 
       if (plus) {
         plus.onclick = () => {
-          setQty(id, quantity + 1);
+          setQty(
+            id,
+            quantity + 1
+          );
         };
       }
     });
@@ -347,7 +442,8 @@ function renderProductQuantities() {
 
 // Build one clean product card.
 function productCard(product) {
-  const quantity = getQty(product.id);
+  const quantity =
+    getQty(product.id);
 
   return `
     <article
@@ -383,7 +479,9 @@ function productCard(product) {
               ${product.category}
             </div>
 
-            <h3>${product.name}</h3>
+            <h3>
+              ${product.name}
+            </h3>
 
           </div>
 
@@ -403,7 +501,9 @@ function productCard(product) {
               −
             </button>
 
-            <span>${quantity}</span>
+            <span>
+              ${quantity}
+            </span>
 
             <button
               type="button"
@@ -457,28 +557,35 @@ function productCard(product) {
 // Load the JSON catalog.
 async function loadProducts() {
   try {
-    const response = await fetch(
-      "assets/products.json",
-      {
-        cache: "no-store"
-      }
-    );
 
-    PRODUCTS = await response.json();
+    const response =
+      await fetch(
+        "assets/products.json",
+        {
+          cache: "no-store"
+        }
+      );
+
+    PRODUCTS =
+      await response.json();
 
     renderCart();
+
     updateCartCount();
+
     updateCheckoutButton();
 
-    const featured = document.querySelector(
-      "[data-featured]"
-    );
+    const featured =
+      document.querySelector(
+        "[data-featured]"
+      );
 
     if (featured) {
-      featured.innerHTML = PRODUCTS
-        .slice(0, 3)
-        .map(productCard)
-        .join("");
+      featured.innerHTML =
+        PRODUCTS
+          .slice(0, 3)
+          .map(productCard)
+          .join("");
     }
 
     if (
@@ -503,8 +610,11 @@ async function loadProducts() {
           ${PRODUCTS
             .map(
               (product) => `
-                <option value="${product.id}">
-                  ${product.name} — ${money(product.price)}
+                <option
+                  value="${product.id}"
+                >
+                  ${product.name} —
+                  ${money(product.price)}
                 </option>
               `
             )
@@ -513,21 +623,25 @@ async function loadProducts() {
       });
 
     setupCheckout();
+
     observeReveals();
 
   } catch (error) {
+
     console.error(
       "Dragon catalog failed to load:",
       error
     );
+
   }
 }
 
 // Render the collection page using the selected category.
 function renderProductsGrid() {
-  const grid = document.querySelector(
-    "[data-products-grid]"
-  );
+  const grid =
+    document.querySelector(
+      "[data-products-grid]"
+    );
 
   if (!grid) return;
 
@@ -541,12 +655,14 @@ function renderProductsGrid() {
       ? PRODUCTS
       : PRODUCTS.filter(
           (product) =>
-            product.category === category
+            product.category ===
+            category
         );
 
-  grid.innerHTML = products
-    .map(productCard)
-    .join("");
+  grid.innerHTML =
+    products
+      .map(productCard)
+      .join("");
 
   const resultCount =
     document.querySelector(
@@ -567,13 +683,16 @@ function setupNav() {
     document.body.dataset.page;
 
   document
-    .querySelectorAll("[data-nav]")
+    .querySelectorAll(
+      "[data-nav]"
+    )
     .forEach((link) => {
 
       link.classList.toggle(
         "active",
         link.dataset.nav === page
       );
+
     });
 }
 
@@ -585,11 +704,19 @@ function observeReveals() {
     );
 
   if (
-    !("IntersectionObserver" in window)
+    !(
+      "IntersectionObserver" in
+      window
+    )
   ) {
-    elements.forEach((element) => {
-      element.classList.add("in");
-    });
+
+    elements.forEach(
+      (element) => {
+        element.classList.add(
+          "in"
+        );
+      }
+    );
 
     return;
   }
@@ -598,18 +725,25 @@ function observeReveals() {
     new IntersectionObserver(
       (entries) => {
 
-        entries.forEach((entry) => {
+        entries.forEach(
+          (entry) => {
 
-          if (!entry.isIntersecting) {
-            return;
+            if (
+              !entry.isIntersecting
+            ) {
+              return;
+            }
+
+            entry.target.classList.add(
+              "in"
+            );
+
+            observer.unobserve(
+              entry.target
+            );
+
           }
-
-          entry.target.classList.add("in");
-
-          observer.unobserve(
-            entry.target
-          );
-        });
+        );
 
       },
       {
@@ -617,29 +751,39 @@ function observeReveals() {
       }
     );
 
-  elements.forEach((element) => {
-    observer.observe(element);
-  });
+  elements.forEach(
+    (element) => {
+      observer.observe(element);
+    }
+  );
 }
 
 // Wire the cart drawer controls.
 function setupCart() {
   document
-    .querySelectorAll("[data-open-cart]")
+    .querySelectorAll(
+      "[data-open-cart]"
+    )
     .forEach((button) => {
+
       button.addEventListener(
         "click",
         openCart
       );
+
     });
 
   document
-    .querySelectorAll("[data-close-cart]")
+    .querySelectorAll(
+      "[data-close-cart]"
+    )
     .forEach((button) => {
+
       button.addEventListener(
         "click",
         closeCart
       );
+
     });
 
   document
@@ -655,9 +799,13 @@ function setupCart() {
     "keydown",
     (event) => {
 
-      if (event.key === "Escape") {
+      if (
+        event.key === "Escape"
+      ) {
+
         closeCart();
         closeMobileMenu();
+
       }
 
     }
@@ -666,19 +814,24 @@ function setupCart() {
 
 // Toggle the mobile navigation drawer.
 function toggleMobileMenu() {
-  const menu = document.querySelector(
-    "[data-mobile-menu]"
-  );
+  const menu =
+    document.querySelector(
+      "[data-mobile-menu]"
+    );
 
   const button =
     document.querySelector(
       "[data-mobile-menu-button]"
     );
 
-  if (!menu || !button) return;
+  if (!menu || !button) {
+    return;
+  }
 
   const isOpen =
-    menu.classList.toggle("open");
+    menu.classList.toggle(
+      "open"
+    );
 
   button.setAttribute(
     "aria-expanded",
@@ -693,18 +846,23 @@ function toggleMobileMenu() {
 
 // Close the mobile navigation drawer.
 function closeMobileMenu() {
-  const menu = document.querySelector(
-    "[data-mobile-menu]"
-  );
+  const menu =
+    document.querySelector(
+      "[data-mobile-menu]"
+    );
 
   const button =
     document.querySelector(
       "[data-mobile-menu-button]"
     );
 
-  if (!menu || !button) return;
+  if (!menu || !button) {
+    return;
+  }
 
-  menu.classList.remove("open");
+  menu.classList.remove(
+    "open"
+  );
 
   button.setAttribute(
     "aria-expanded",
@@ -741,15 +899,129 @@ function setupMobileMenu() {
     });
 }
 
+// Open the Dragon Instagram DM from a real user interaction.
+function openDragonInstagramDM() {
+  const userAgent =
+    navigator.userAgent || "";
+
+  const isAndroid =
+    /Android/i.test(userAgent);
+
+  const isIOS =
+    /iPhone|iPad|iPod/i.test(
+      userAgent
+    );
+
+  /*
+   * Android:
+   * Try to hand the exact DM URL
+   * directly to the Instagram app.
+   */
+  if (isAndroid) {
+
+    const androidIntent =
+      "intent://direct/t/17845443282150287/" +
+      "#Intent;scheme=https;" +
+      "package=com.instagram.android;" +
+      "end";
+
+    window.location.href =
+      androidIntent;
+
+    /*
+     * If Instagram does not take over,
+     * fall back to the normal web DM.
+     */
+    setTimeout(() => {
+
+      if (
+        document.visibilityState ===
+        "visible"
+      ) {
+
+        window.location.href =
+          INSTAGRAM_DM_WEB;
+
+      }
+
+    }, 1500);
+
+    return;
+  }
+
+  /*
+   * iPhone / iPad:
+   * Try Instagram's native URL scheme.
+   */
+  if (isIOS) {
+
+    let appOpened = false;
+
+    const handleVisibility =
+      () => {
+
+        if (
+          document.visibilityState ===
+          "hidden"
+        ) {
+          appOpened = true;
+        }
+
+      };
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibility,
+      {
+        once: true
+      }
+    );
+
+    window.location.href =
+      INSTAGRAM_DM_APP;
+
+    /*
+     * Fallback to the web DM
+     * if the app scheme was not handled.
+     */
+    setTimeout(() => {
+
+      if (
+        !appOpened &&
+        document.visibilityState ===
+          "visible"
+      ) {
+
+        window.location.href =
+          INSTAGRAM_DM_WEB;
+
+      }
+
+    }, 1500);
+
+    return;
+  }
+
+  /*
+   * Desktop:
+   * Open the exact web DM.
+   */
+  window.location.assign(
+    INSTAGRAM_DM_WEB
+  );
+}
+
 // Render checkout and prepare the Instagram DM message.
 function setupCheckout() {
-  const form = document.querySelector(
-    "[data-order-form]"
-  );
+  const form =
+    document.querySelector(
+      "[data-order-form]"
+    );
 
   if (
     !form ||
-    form.dataset.ready === "true"
+    form.dataset.ready ===
+      "true"
   ) {
     return;
   }
@@ -767,7 +1039,9 @@ function setupCheckout() {
       "hidden"
     );
 
-    form.classList.add("hidden");
+    form.classList.add(
+      "hidden"
+    );
 
     return;
   }
@@ -779,47 +1053,54 @@ function setupCheckout() {
 
   if (!summary) return;
 
-  summary.innerHTML = cart
-    .map((item) => {
+  summary.innerHTML =
+    cart
+      .map((item) => {
 
-      const product =
-        PRODUCTS.find(
-          (entry) =>
-            entry.id === item.id
-        );
+        const product =
+          PRODUCTS.find(
+            (entry) =>
+              entry.id ===
+              item.id
+          );
 
-      if (!product) return "";
+        if (!product) {
+          return "";
+        }
 
-      return `
-        <div class="order-line">
+        return `
+          <div class="order-line">
 
-          <div>
+            <div>
+
+              <strong>
+                ${product.name}
+              </strong>
+
+              <span>
+                Qty ${item.qty}
+              </span>
+
+            </div>
 
             <strong>
-              ${product.name}
+              ${money(
+                product.price *
+                item.qty
+              )}
             </strong>
 
-            <span>
-              Qty ${item.qty}
-            </span>
-
           </div>
+        `;
 
-          <strong>
-            ${money(
-              product.price * item.qty
-            )}
-          </strong>
-
-        </div>
-      `;
-
-    })
-    .join("") +
+      })
+      .join("") +
     `
       <div class="order-total">
 
-        <span>Total</span>
+        <span>
+          Total
+        </span>
 
         <strong>
           ${money(cartTotal())}
@@ -828,7 +1109,8 @@ function setupCheckout() {
       </div>
     `;
 
-  form.dataset.ready = "true";
+  form.dataset.ready =
+    "true";
 
   form.addEventListener(
     "submit",
@@ -849,14 +1131,22 @@ function setupCheckout() {
             const product =
               PRODUCTS.find(
                 (entry) =>
-                  entry.id === item.id
+                  entry.id ===
+                  item.id
               );
 
-            if (!product) return "";
+            if (!product) {
+              return "";
+            }
 
-            return `${product.name} × ${item.qty} — ${money(
-              product.price * item.qty
-            )}`;
+            return (
+              `${product.name} × ` +
+              `${item.qty} — ` +
+              `${money(
+                product.price *
+                item.qty
+              )}`
+            );
 
           })
           .filter(Boolean)
@@ -869,7 +1159,9 @@ function setupCheckout() {
         `Phone: ${data.get("phone")}`,
         `Governorate: ${data.get("governorate")}`,
         `Address: ${data.get("address")}`,
-        `Notes: ${data.get("notes") || "—"}`,
+        `Notes: ${
+          data.get("notes") || "—"
+        }`,
         "",
         "ORDER DETAILS:",
         orderLines,
@@ -909,9 +1201,11 @@ function setupCheckout() {
         );
 
       if (success) {
+
         success.classList.add(
           "show"
         );
+
       }
 
       // Detect mobile devices.
@@ -950,17 +1244,21 @@ function setupCheckout() {
 }
 
 // Show the mobile order-success panel.
-function showMobileOrderSuccess(message) {
+function showMobileOrderSuccess(
+  message
+) {
 
-  let panel = document.querySelector(
-    "[data-mobile-order-success]"
-  );
+  let panel =
+    document.querySelector(
+      "[data-mobile-order-success]"
+    );
 
   if (!panel) {
 
-    panel = document.createElement(
-      "div"
-    );
+    panel =
+      document.createElement(
+        "div"
+      );
 
     panel.setAttribute(
       "data-mobile-order-success",
@@ -998,7 +1296,9 @@ function showMobileOrderSuccess(message) {
           ORDER READY
         </div>
 
-        <h2 id="dragon-mobile-success-title">
+        <h2
+          id="dragon-mobile-success-title"
+        >
           Your order is ready
         </h2>
 
@@ -1231,7 +1531,7 @@ function showMobileOrderSuccess(message) {
         }
       );
 
-    // Open the exact Instagram DM.
+    // Open the Dragon Instagram DM.
     panel
       .querySelector(
         "[data-open-instagram]"
@@ -1241,22 +1541,15 @@ function showMobileOrderSuccess(message) {
         () => {
 
           /*
-           * IMPORTANT:
+           * The button is clicked directly
+           * by the customer.
            *
-           * We intentionally use the exact Instagram DM URL.
-           *
-           * We do NOT use:
-           * instagram://user
-           * instagram://direct
-           * ig.me
-           *
-           * because these can produce "link is broken"
-           * on some mobile devices.
+           * This gives the browser permission
+           * to attempt the Instagram app
+           * deep-link.
            */
 
-          window.location.assign(
-            INSTAGRAM_DM_WEB
-          );
+          openDragonInstagramDM();
 
         }
       );
@@ -1269,8 +1562,11 @@ document.addEventListener(
   () => {
 
     setupNav();
+
     setupCart();
+
     setupMobileMenu();
+
     loadProducts();
 
     const filter =
@@ -1284,7 +1580,9 @@ document.addEventListener(
     );
 
     document
-      .querySelectorAll("[data-year]")
+      .querySelectorAll(
+        "[data-year]"
+      )
       .forEach((element) => {
 
         element.textContent =
