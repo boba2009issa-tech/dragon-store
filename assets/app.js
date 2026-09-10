@@ -5,7 +5,7 @@ const CART_KEY = "dragon_cart_v1";
 const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
 
 // Instagram profile for mobile/app fallback
-const INSTAGRAM_APP_PROFILE = "instagram:///t/";
+const INSTAGRAM_APP_PROFILE = "instagram://direct/t/";
 
 let PRODUCTS = [];
 // Format Egyptian pound prices consistently across the site.
