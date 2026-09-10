@@ -1,8 +1,13 @@
+// Cart storage key
 const CART_KEY = "dragon_cart_v1";
-const INSTAGRAM_PROFILE = "https://www.instagram.com/direct/t/17845443282150287/";
-const INSTAGRAM_APP_PROFILE = "https://www.instagram.com/direct/t/17845443282150287/";
-let PRODUCTS = [];
 
+// Official Instagram profile
+const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
+
+// Instagram profile for mobile/app fallback
+const INSTAGRAM_APP_PROFILE = "https://www.instagram.com/drago__n1_/";
+
+let PRODUCTS = [];
 // Format Egyptian pound prices consistently across the site.
 function money(value) {
   return `${Number(value).toLocaleString("en-EG")} EGP`;
