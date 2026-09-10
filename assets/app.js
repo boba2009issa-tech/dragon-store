@@ -7,7 +7,7 @@ const INSTAGRAM_DM_WEB =
 
 // Exact Instagram DM deep link for the mobile app
 const INSTAGRAM_DM_APP =
-  "instagram://direct/t/17845443282150287/";
+  "https://ig.me/m/drago__n1__";
 
 let PRODUCTS = [];
 // Format Egyptian pound prices consistently across the site.
