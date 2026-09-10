@@ -1,11 +1,13 @@
-// Cart storage key
-const CART_KEY = "dragon_cart_v1";
-
 // Official Instagram profile
 const INSTAGRAM_PROFILE = "https://www.instagram.com/drago__n1_/";
 
-// Instagram profile for mobile/app fallback
-const INSTAGRAM_APP_PROFILE = "instagram://direct/t/17845443282150287/";
+// Exact Instagram DM on the web
+const INSTAGRAM_DM_WEB =
+  "https://www.instagram.com/direct/t/17845443282150287/";
+
+// Exact Instagram DM deep link for the mobile app
+const INSTAGRAM_DM_APP =
+  "instagram://direct/t/17845443282150287/";
 
 let PRODUCTS = [];
 // Format Egyptian pound prices consistently across the site.
@@ -428,19 +430,49 @@ function setupCheckout() {
     showToast("Order copied — opening Dragon Instagram");
 
     // Prefer the Instagram app on phones, then fall back to the real web profile.
-    setTimeout(() => {
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      if (isMobile) {
-        window.location.href = INSTAGRAM_APP_PROFILE;
-        setTimeout(() => {
-          window.location.href = INSTAGRAM_PROFILE;
-        }, 1200);
-      } else {
-        window.location.href = INSTAGRAM_PROFILE;
-      }
-    }, 350);
-  });
-}
+   // Open the exact Instagram DM after the order is copied.
+setTimeout(() => {
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  // Desktop: open the DM in Instagram Web.
+  if (!isMobile) {
+    window.location.assign(INSTAGRAM_DM_WEB);
+    return;
+  }
+
+  // Mobile: try to open the exact DM inside the Instagram app.
+  let appOpened = false;
+
+  const onVisibilityChange = () => {
+    if (document.hidden) {
+      appOpened = true;
+      document.removeEventListener(
+        "visibilitychange",
+        onVisibilityChange
+      );
+    }
+  };
+
+  document.addEventListener(
+    "visibilitychange",
+    onVisibilityChange
+  );
+
+  // Try opening the Instagram app.
+  window.location.href = INSTAGRAM_DM_APP;
+
+  // If Instagram did not open, fall back to the web DM.
+  setTimeout(() => {
+    document.removeEventListener(
+      "visibilitychange",
+      onVisibilityChange
+    );
+
+    if (!appOpened && !document.hidden) {
+      window.location.assign(INSTAGRAM_DM_WEB);
+    }
+  }, 1800);
+}, 350);
 
 // Start the application after the document is available.
 document.addEventListener("DOMContentLoaded", () => {
